@@ -82,10 +82,11 @@ class resetSim(bpy.types.Operator):
         return True
 
     def execute(self, context):
-        frame_change_post.clear()   
+        frame_change_post.clear()
+        depsgraph = context.evaluated_depsgraph_get()  
         ob_base = bpy.data.objects.get("Base")
         ob_sim = bpy.data.objects.get("Sim")
-        ob_sim.data = bpy.data.meshes.new_from_object(ob_base)
+        ob_sim.data = bpy.data.meshes.new_from_object(ob_base.evaluated_get(depsgraph))
 
         return {"FINISHED"}
 
